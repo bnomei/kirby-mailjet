@@ -15,7 +15,7 @@ color: rgb(221, 34, 0);}
 	<center>
 		<h1 style="margin-top:40px;"><?= $page->title() ?></h1>
 		<div><a style="border-radius: 5px;border:1px solid #666;color:#666;text-decoration:none;padding:5px;" target="_blank" href="<?= $site->url() ?>/panel/pages/<?= $page->diruri() ?>/edit">Edit in Panel</a> <a style="border-radius: 5px;border:1px solid #666;color:#666;text-decoration:none;padding:5px;" target="_blank" href="https://github.com/bnomei/kirby-mailjet">Github Docs</a>
-		<a style="border-radius: 5px;border:1px solid #666;color:#666;text-decoration:none;padding:5px;" target="_blank" href="https://mjml.io/try-it-live/HJWTTKyJW">mjml Online Editor</a>
+		<a style="border-radius: 5px;border:1px solid #666;color:#666;text-decoration:none;padding:5px;" target="_blank" href="https://mjml.io/try-it-live">mjml Online Editor</a>
 		<br><br></div>
 	</center>
 

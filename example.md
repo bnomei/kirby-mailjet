@@ -145,7 +145,7 @@ Add a email-adress if needed, Select a Contactslist then press the *Save*-Button
 
 ### Where to go from here?
 
-Take a look at the [mjml code flavoured with mustache](https://github.com/bnomei/kirby-mailjet/blob/master/snippets/mj-example-newsletter.php) or its [Online Editor Version](https://mjml.io/try-it-live/HJWTTKyJW).
+Take a look at the [mjml code flavoured with mustache](https://github.com/bnomei/kirby-mailjet/blob/master/snippets/mj-example-newsletter.php) or even copy it to the [Online Editor](https://mjml.io/try-it-live).
 
 Check out the [controller](https://github.com/bnomei/kirby-mailjet/blob/master/controllers/mj-example.php) and [template](https://github.com/bnomei/kirby-mailjet/blob/master/templates/mj-example.php) how the example does its magic and weave your own based on that. 
 
