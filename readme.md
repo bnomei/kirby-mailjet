@@ -77,12 +77,12 @@ You can call the helper class to add or remove contacts from a contactslist. If 
 
 ```php
 KirbyMailjet::updateContactslist(
-	'contactslistnameOrID',
-	KirbyMailjet::LIST_ADDFORCE, // or LIST_ADDNOFORCE, LIST_UNSUB, LIST_REMOVE
-	[
-		'email' => 'test@example.com',
-		//'firstname' => 'max', // custom contact property
-	]
+  'contactslistnameOrID',
+  KirbyMailjet::LIST_ADDFORCE, // or LIST_ADDNOFORCE, LIST_UNSUB, LIST_REMOVE
+  [
+    'email' => 'test@example.com',
+    //'firstname' => 'max', // custom contact property
+  ]
 );
 ```
 
@@ -109,19 +109,19 @@ $options['Mj-campaign'] = 'Any Campaign';
 // or add some attachments, assuming a Kirby Media object
 // https://dev.mailjet.com/guides/#sending-with-attached-files
 $attachedFile = [ 
-	'Content-type' => $file->mime(),
-	'Filename' => $file->filename(),
-	'content' => base64_encode($file->content()),
+  'Content-type' => $file->mime(),
+  'Filename' => $file->filename(),
+  'content' => base64_encode($file->content()),
 ];
 $options['Attachments'] = array($attachedFile); // must be array even if only one file
 
 $params = [
-	'to'      => 'email@example.com',
-    'from'    => $senderEmail, // this must be a valid sender email-adress
-    'subject' => 'Sending emails with Kirby Mailjet is easy',
-    'body'    => 'Hey! This was really easy!', // or responsive HTML code
-    'service' => KirbyMailjet::EMAIL_SERVICE, // this is important!
-    'options' => $options,
+  'to'      => 'email@example.com',
+  'from'    => $senderEmail, // this must be a valid sender email-adress
+  'subject' => 'Sending emails with Kirby Mailjet is easy',
+  'body'    => 'Hey! This was really easy!', // or responsive HTML code
+  'service' => KirbyMailjet::EMAIL_SERVICE, // this is important!
+  'options' => $options,
 ];
 
 // https://getkirby.com/docs/cheatsheet/helpers/email
@@ -157,49 +157,49 @@ $subject = trim($page->title());
 
 // set an unique title for mailjets dashboard.
 // this is never seen by newsletter reciepients.
-$title = date('Y-m-d H:i:s')'; // just an example
+$title = date('Y-m-d H:i:s'); // just an example
 
 // mailjet will not accept urls bigger than 100 chars
 // for this property, even if this is used in dashboard only.
 // urls within the html content can be longer than 100 chars.
 $url = $page->url();
 if(strlen($url) > 100) {
-	$url = $page->tinyurl();
+  $url = $page->tinyurl();
 }
 
 // these fields are required, you have to provide each of them
 $campaign_body = [
-	'Locale' => "en", // 'de_DE', ...
-	'SenderEmail' => $senderEmail,
-	'Sender' => KirbyMailjet::senderName(), // will get name from mailjet for you
-	'Subject' => $subject, // UNIQUE for this Newsletter
-	'Title' => $title,
-	'Url' => trim($url),
+  'Locale' => "en", // 'de_DE', ...
+  'SenderEmail' => $senderEmail,
+  'Sender' => KirbyMailjet::senderName(), // will get name from mailjet for you
+  'Subject' => $subject, // UNIQUE for this Newsletter
+  'Title' => $title,
+  'Url' => trim($url),
 ];
 
 // if you want to filter a contactslist 
 // use a segmentation (only mailjet premium subscription)
 if($segid = KirbyMailjet::getSegment($segmentationNameOrID)) {
-	$campaign_body['SegmentationID'] = $segid;
+  $campaign_body['SegmentationID'] = $segid;
 }
 
 $campaign_content = [
-	'Html-part' => $html, // here goes your content
-	'Text-part' => "Some plain text fallback with a link to the online version of the newsletter. ".trim($page->url()),
+  'Html-part' => $html, // here goes your content
+  'Text-part' => "Some plain text fallback with a link to the online version of the newsletter. ".trim($page->url()),
 ];
 
 KirbyMailjet::sendNewsletter(
-	'contactlistsnameOrID',
-	$campaign_body,
-	$campaign_content,
-	'my@email.com', // email-adress to send test to or string 'Publish'
+  'contactlistsnameOrID',
+  $campaign_body,
+  $campaign_content,
+  'my@email.com', // email-adress to send test to or string 'Publish'
 );
 
 // you can enable logging in config file like this
 // c::set('plugin.mailjet.logfile', YOUR_PATH_TO_FILE);
 // or check for errors now
 if(KirbyMailjet::hasErrors()) {
-	a::show(KirbyMailjet::errors());
+  a::show(KirbyMailjet::errors());
 }
 ```
 
@@ -237,7 +237,11 @@ You can set these in your `site/config/config.php`.
 
 ### plugin.mailjet.logfile
 - default: `false`
-- set this value to the path of a file where you want the log to be written to. like `kirby()->roots()->site().DS.'logs'.DS.'mailjet-'.date('Ym').'.log'`
+- set this value to the path of a file where you want the log to be written to.
+
+```php
+c::set('plugin.mailjet.logfile', kirby()->roots()->site().DS.'logs'.DS.'mailjet-'.date('Ym').'.log');
+```
 
 ### plugin.mailjet.json-contactslists.exclude
 - default: `[]`

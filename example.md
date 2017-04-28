@@ -79,7 +79,7 @@ Read [all about it here](https://github.com/bnomei/kirby-mailjet#setupmailjetacc
 
 ### Installation of Panel Fields
 
-This plugin comes with some example panel fields to get you started. You can find their their [global field definitions](https://getkirby.com/docs/panel/blueprints/global-field-definitions) in the `[kirby-mailjet/blueprints/fields](https://github.com/bnomei/kirby-mailjet/blob/master/blueprints/fields/)` folder.
+This plugin comes with some example panel fields to get you started. You can find their their [global field definitions](https://getkirby.com/docs/panel/blueprints/global-field-definitions) in the [kirby-mailjet/blueprints/fields](https://github.com/bnomei/kirby-mailjet/blob/master/blueprints/fields/) folder.
 
 Copy **all** of provided global field definitions from the plugin to your `site/blueprints/fields` folder. Create the folder if needed. 
 
@@ -145,7 +145,7 @@ Add a email-adress if needed, Select a Contactslist then press the *Save*-Button
 
 ### Where to go from here?
 
-Take a look at the [mjml code flavoured with mustache](https://github.com/bnomei/kirby-mailjet/blob/master/snippets/mj-example.php) or its [Online Editor Version](https://mjml.io/try-it-live/HJWTTKyJW).
+Take a look at the [mjml code flavoured with mustache](https://github.com/bnomei/kirby-mailjet/blob/master/snippets/mj-example-newsletter.php) or its [Online Editor Version](https://mjml.io/try-it-live/HJWTTKyJW).
 
 Check out the [controller](https://github.com/bnomei/kirby-mailjet/blob/master/controllers/mj-example.php) and [template](https://github.com/bnomei/kirby-mailjet/blob/master/templates/mj-example.php) how the example does its magic and weave your own based on that. 
 
