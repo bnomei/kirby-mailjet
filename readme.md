@@ -269,6 +269,8 @@ Kirby Mailjet can be evaluated as long as you want on how many private servers y
 
 [<img src="https://img.shields.io/badge/%E2%80%BA-Buy%20a%20license-green.svg" alt="Buy a license">](https://bnomei.onfastspring.com/kirby-mailjet)
 
+If you purchase a license during ALPHA you can get 50% off using this coupon code `KIRBY-MAILJET-ALPHA`.
+
 However, even with a valid license code, it is discouraged to use it in any project, that promotes racism, sexism, homophobia, animal abuse or any other form of hate-speech.
 
 ## Technical Support
