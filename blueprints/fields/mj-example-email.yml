@@ -1,0 +1,6 @@
+# global def
+label: Email for Test
+type: email
+placeholder: "send to me"
+#width: 1/2
+#help: Erst <b>Speichern</b> dann senden! Wenn leer gehts an einen selbst.

@@ -1,0 +1,9 @@
+# 
+# news
+# 
+label: mj-example-block-news
+snippet: mj-example-block-news
+fields:
+  newsheadline:
+    type: text
+    label: newsheadline

@@ -1,0 +1,23 @@
+<?php
+l::set([
+    'mailjet-error-dump' => 'FEHLER: ',
+    'mailjet-error-client' => 'Mailjet Authentifizierung fehlgeschlagen.',
+    'mailjet-error-contact' => 'Kontakt \'{email}\' konnte nicht erstellt werden.',
+    'mailjet-error-contactlist-change' => 'Kontaktliste \'{contactlist}\' verweigerte \'{cmd}\' beim Kontakt \'{email}\'.',
+    'mailjet-error-contactslist' => 'Kontaktliste \'{contactlist}\' ungültig.',
+    'mailjet-error-contactslist-create' => 'Erstellen der Kontaktsliste \'{contactlist}\' fehlgeschlagen.',
+    'mailjet-error-invalid-keys' => 'Mailjet Zugang ungültig.',
+    'mailjet-error-mustache-file' => 'Mustache Vorlage-Datei fehlt: \'{file}\'.',
+    'mailjet-error-newsletter' => 'Newsletter \'{newsletter}\' ungültig.',
+    'mailjet-error-newsletter-body-missing-keys' => 'Newsletter Body fehlen Werte: {keys}.',
+    'mailjet-error-newsletter-create' => 'Erstellen Newsletter \'{newsletter}\' fehlgeschlagen.',
+    'mailjet-error-newsletter-html' => 'Newsletter Content \'{newsletter}\' fehlt der HTML-part.',
+    'mailjet-error-newsletter-publish' => 'Versenden Newsletter \'{newsletter}\' an Kontaktsliste \'{contactlist}\' fehlgeschlagen.',
+    'mailjet-error-newsletter-publish-non-draft' => 'Newsletter \'{newsletter}\' an Kontaktliste \'{contactlist}\' bereits veröffentlicht.',
+    'mailjet-error-newsletter-update-draft' => 'Aktualisierung Newsletter \'{newsletter}\' mit Kontaktliste \'{contactlist}\' fehlgeschlagen.',
+    'mailjet-error-segment' => 'Segment \'{segment}\' ungültig.',
+    'mailjet-error-sendername' => 'Sendername für \'{email}\' ungültig.',
+    'mailjet-error-sendmail-failed' => 'Email an \'{email}\' konnte nicht versandt werden.',
+    'mailjet-success-newsletter-publish' => 'Newsletter \'{newsletter}\' wurde an Kontaktsliste \'{contactlist}\' veröffentlicht.',
+    'mailjet-success-newsletter-test' => 'Newsletter \'{newsletter}\' TEST wurde an {email} versandt.{service}',
+]);

@@ -1,0 +1,60 @@
+title: Mailjet Plugin Example Page
+icon: life-ring
+options:
+  status: false
+  template: false
+  url: false
+fields:
+  title:
+    type: text
+    default: mailjetexample
+    readonly: true
+    icon: life-ring
+    help: >
+      <style>.mailjet-debug {border:1px solid #ccc;background-color:#ddd;padding:20px;margin-bottom:20px;} .mailjet-debug > pre, .mailjet-debug > ul > li {font-family: monospace;word-wrap:break-word;}</style>
+  docsmailjet:
+    type: opener
+    command: 'https://github.com/bnomei/kirby-mailjet/open:yes'
+    text: 'Mailjet Plugin Github Docs'
+    width: 1/2
+  docsopener:
+    type: opener
+    command: 'https://github.com/bnomei/kirby-opener/open:yes'
+    text: 'Opener Plugin Github Docs'
+    width: 1/2
+
+  #--------------------------------------
+  builder-line:
+    type: headline
+    label: Kirby Builder
+
+  builder:
+    type: builder
+    fieldsets:
+      # use 'extends'. see https://github.com/TimOetting/kirby-builder/issues/8
+      headline:
+        extends: mj-example-block-headline
+      text:
+        extends: mj-example-block-text
+      hero:
+        extends: mj-example-block-hero
+      news:
+        extends: mj-example-block-news
+      footer:
+        extends: mj-example-block-footer
+    help: "With kirby-mailjet each fieldset should be used only once!"
+
+  #--------------------------------------
+  mailjet-line:
+    type: headline
+    label: Kirby Mailjet
+
+  mjcontactslist: mj-example-contactslists
+  mjsegment: mj-example-segment
+  mjemail: mj-example-email
+  mjreminder: mj-example-save-reminder
+  mjpreview: mj-example-preview
+  mjtrans: mj-example-trans
+  mjtest: mj-example-test
+  mjpublish: mj-example-newsletter
+

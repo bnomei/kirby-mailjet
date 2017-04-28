@@ -1,0 +1,16 @@
+# 
+# footer
+# 
+label: mj-example-block-footer
+snippet: mj-example-block-footer
+fields:
+  text:
+    label: text
+    type: textarea
+    label: text
+  facebook:
+    type: url
+    icon: facebook
+  googleplus:
+    type: url
+    icon: google

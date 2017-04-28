@@ -1,0 +1,23 @@
+<?php
+l::set([
+	'mailjet-error-dump' => 'ERROR: ',
+    'mailjet-error-client' => 'Mailjet authentification failed.',
+    'mailjet-error-contact' => 'Contact \'{email}\' could not be created.',
+    'mailjet-error-contactlist-change' => 'Contactlist \'{contactlist}\' rejected \'{cmd}\' of contact \'{email}\'.',
+    'mailjet-error-contactslist' => 'Contactlist \'{contactlist}\' not valid.',
+    'mailjet-error-contactslist-create' => 'Creating Contactslist \'{contactlist}\' failed.',
+    'mailjet-error-invalid-keys' => 'Mailjet keys invalid.',
+    'mailjet-error-mustache-file' => 'Mustache template file is missing: \'{file}\'.',
+    'mailjet-error-newsletter' => 'Newsletter \'{newsletter}\' not valid.',
+    'mailjet-error-newsletter-body-missing-keys' => 'Newsletter Body is missing keys: {keys}.',
+    'mailjet-error-newsletter-create' => 'Creating Newsletter \'{newsletter}\' failed.',
+    'mailjet-error-newsletter-html' => 'Newsletter Content \'{newsletter}\' is missing HTML-part.',
+    'mailjet-error-newsletter-publish' => 'Sending Newsletter \'{newsletter}\' to Contactslist \'{contactlist}\' failed.',
+    'mailjet-error-newsletter-publish-non-draft' => 'Newsletter \'{newsletter}\' already published with Contactlist \'{contactlist}\'.',
+    'mailjet-error-newsletter-update-draft' => 'Newsletter \'{newsletter}\' with Contactlist \'{contactlist}\' could not be updated.',
+    'mailjet-error-segment' => 'Segment \'{segment}\' not valid.',
+    'mailjet-error-sendername' => 'Sendername not found for \'{email}\'.',
+    'mailjet-error-sendmail-failed' => 'The email to \'{email}\' could not be sent.',
+    'mailjet-success-newsletter-publish' => 'Newsletter \'{newsletter}\' published to Contactslist \'{contactlist}\'.',
+    'mailjet-success-newsletter-test' => 'Newsletter \'{newsletter}\' TEST sent to {email}.{service}',
+]);

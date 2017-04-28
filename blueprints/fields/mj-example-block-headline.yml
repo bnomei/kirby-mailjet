@@ -1,0 +1,9 @@
+# 
+# headline
+# 
+label: mj-example-block-headline
+snippet: mj-example-block-headline
+fields:
+  headline:
+    type: text
+    label: headline

@@ -1,0 +1,18 @@
+# 
+# hero
+# 
+label: mj-example-block-hero
+snippet: mj-example-block-hero
+fields:
+  heroheadline:
+    type: text
+    label: heroheadline
+  herobutton:
+    type: text
+    label: herobutton
+  herolink:
+    type: text # using type 'text' not 'url' to support url()-helper
+    label: herolink
+  heroimage:
+    type: text # using type 'text' not 'url' to support url()-helper
+    label: heroimage

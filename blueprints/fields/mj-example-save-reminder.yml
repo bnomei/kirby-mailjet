@@ -1,0 +1,5 @@
+label: '&nbsp;'
+type: messagebox
+text: "Save before sending E-Mails"
+color: "#d31f26"
+bordercolor: "#d31f26"

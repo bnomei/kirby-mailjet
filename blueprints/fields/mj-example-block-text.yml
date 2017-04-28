@@ -1,0 +1,9 @@
+# 
+# text
+# 
+label: mj-example-block-text
+snippet: mj-example-block-text
+fields:
+  text:
+    type: textarea
+    label: text

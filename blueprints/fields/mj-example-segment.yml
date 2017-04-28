@@ -1,0 +1,7 @@
+# global def
+label: Segment
+type: select
+width: 1/2
+# URL to route needs to be hardcoded. :-(
+# https://github.com/getkirby/panel/issues/1035
+options: http://YOUR_DOMAIN_HERE/kirby-mailjet/PLUGIN_HASH_HERE/json/segments.json

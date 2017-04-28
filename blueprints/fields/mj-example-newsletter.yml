@@ -1,0 +1,10 @@
+#global def
+label: '&nbsp;'
+type: opener
+width: 1/2
+command: '{page.url}/mailjet:send/{page.secret}'
+text: "Send Newsletter to Contactslist and apply Segment (if any)"
+textprogress: "Send Newsletter to Contactslist and apply Segment (if any)"
+textsuccess: "Sent Newsletter!"
+#texterror: "Not possible!"
+confirm: 'Publish now?'

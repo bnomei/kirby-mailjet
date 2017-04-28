@@ -1,0 +1,9 @@
+#global def
+label: 'Newsletter'
+type: opener
+width: 1/2
+command: '{page.url}/mailjet:test/{page.secret}'
+text: "Send Newsletter TEST to email-adress above"
+textprogress: "Send Newsletter TEST to email above"
+textsuccess: "Newsletter TEST Sent!"
+#texterror: "Not possible!"

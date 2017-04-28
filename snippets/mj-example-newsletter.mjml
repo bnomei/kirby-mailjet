@@ -1,0 +1,100 @@
+<mjml>
+  <mj-head>
+    <mj-style inline="inline">.link, .link:active, .link:visited { color: #71feac; text-decoration: none; } .link:hover { color: #71feac; text-decoration: underline; }</mj-style>
+    <mj-font name="Montserrat" href="https://fonts.googleapis.com/css?family=Montserrat" />
+    <mj-font name="VesperLibre" href="https://fonts.googleapis.com/css?family=Vesper+Libre" />
+    <mj-attributes>
+      <mj-class name="headline" align="center" font-size="42px" line-height="50px" font-weight="700" font-family="Montserrat" padding-top="48px" padding-bottom="24px" />
+      <mj-class name="newsheadline" font-size="24px" line-height="30px" font-weight="700" font-family="Montserrat" padding="48px 24px 0px" />
+      <mj-class name="newsitem" border-top="1px solid #fffff8" border-bottom="1px solid #fffff8" />
+      <mj-class name="newsdate" color="#71feac" font-weight="700" font-family="Montserrat" />
+      <mj-class name="footer" color="#71feac" align="center" />
+      <mj-class name="bgcolor" background-color="#fffff8" />
+      <mj-class name="button" font-family="Montserrat" background-color="#4509be" color="white" text-decoration="none" />
+      <mj-class name="heroheadline" padding-top="42px" color="#4509be" font-family="Montserrat" align="center" font-size="35px" line-height="50px" font-weight="900" />
+      <mj-class name="newsblock" background-color="#eafded" padding="12px 24px" />
+      <mj-class name="text" padding="0px 24px" />
+      <mj-text padding="0" />
+      <mj-all font-size="17px" line-height="24px" font-family="VesperLibre, Georgia, serif" color="#261e66" />
+    </mj-attributes>
+  </mj-head>
+  <mj-body>
+    <mj-container mj-class="bgcolor">
+      <mj-raw>
+        <!--PART:mj-example-block-headline-->
+      </mj-raw>
+      <mj-section mj-class="bgcolor">
+        <mj-column>
+          <mj-text mj-class="headline">{{ headline }}</mj-text>
+        </mj-column>
+      </mj-section>
+      <mj-raw>
+        <!--/PART:mj-example-block-headline-->
+      </mj-raw>
+      <mj-raw>
+        <!--PART:mj-example-block-text-->
+      </mj-raw>
+      <mj-section mj-class="bgcolor">
+        <mj-column>
+          <mj-text mj-class="text">{{ text }}</mj-text>
+        </mj-column>
+      </mj-section>
+      <mj-raw>
+        <!--/PART:mj-example-block-text-->
+      </mj-raw>
+      <mj-raw>
+        <!--PART:mj-example-block-hero-->
+      </mj-raw>
+      <mj-wrapper mj-class="bgcolor">
+        <mj-hero mode="fixed-height" height="200px" background-width="1200px" background-height="800px" background-url="{{ heroimage }}" background-color="#eafded" padding="48px 0px">
+          <mj-hero-content width="100%">
+            <mj-text mj-class="heroheadline">{{ heroheadline }}</mj-text>
+            <mj-button mj-class="button" href="{{ herolink }}">{{ herobutton }}</mj-button>
+          </mj-hero-content>
+        </mj-hero>
+      </mj-wrapper>
+      <mj-raw>
+        <!--/PART:mj-example-block-hero-->
+      </mj-raw>
+      <mj-raw>
+        <!--PART:mj-example-block-news-->
+      </mj-raw>
+      <mj-section mj-class="bgcolor">
+        <mj-column>
+          <mj-text mj-class="newsheadline">{{ newsheadline }}</mj-text>
+        </mj-column>
+      </mj-section>
+      <mj-wrapper mj-class="newsblock">
+        <mj-raw>{{# news }}</mj-raw>
+        <mj-section mj-class="newsitem">
+          <mj-column width="25%">
+            <mj-text mj-class="newsdate">{{ date }}</mj-text>
+          </mj-column>
+          <mj-column width="55%">
+            <mj-text>{{ text }}</mj-text>
+          </mj-column>
+          <mj-column width="20%" vertical-align="bottom">
+            <mj-button mj-class="button" padding="0" href="{{ link }}">&#8594;</mj-button>
+          </mj-column>
+        </mj-section>
+        <mj-raw>{{/ news }}</mj-raw>
+      </mj-wrapper>
+      <mj-raw>
+        <!--/PART:mj-example-block-news-->
+      </mj-raw>
+      <mj-raw>
+        <!--PART:mj-example-block-footer-->
+      </mj-raw>
+      <mj-section mj-class="bgcolor" padding-top="96px">
+        <mj-column>
+          <mj-text mj-class="footer text">{{ text }}</mj-text>
+          <mj-divider border-width="1px" border-style="solid" border-color="#71feac" />
+          <mj-social color="#71feac" padding-bottom="48px" mode="horizontal" display="google facebook" google-icon-color="#71feac" facebook-icon-color="#71feac" facebook-href="{{ facebook }}" google-href="{{ googleplus }}" />
+        </mj-column>
+      </mj-section>
+      <mj-raw>
+        <!--/PART:mj-example-block-footer-->
+      </mj-raw>
+    </mj-container>
+  </mj-body>
+</mjml>

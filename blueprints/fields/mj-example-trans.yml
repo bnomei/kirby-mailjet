@@ -1,0 +1,9 @@
+#global def
+label: '&nbsp;'
+type: opener
+width: 1/2
+command: '{page.url}/mailjet:test/mode:transactional/{page.secret}'
+text: "Send to email above (transactional)"
+textprogress: "Send to email above (transactional)"
+textsuccess: "Sent (transactional)!"
+#texterror: "Not possible!"

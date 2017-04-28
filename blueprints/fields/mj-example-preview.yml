@@ -1,0 +1,6 @@
+#global def
+label: 'E-Mail'
+type: opener
+width: 1/2
+command: '{page.url}/mailjet:test/mode:preview/{page.secret}/open:yes'
+text: "Preview E-Mail online"
