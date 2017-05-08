@@ -108,7 +108,7 @@ But the Select Fields will not work yet. Lets fix that.
 
 ### Setup Custom Routes
 
-Since Kirby does not yet but [hopefully soon](https://github.com/getkirby/panel/issues/1035) support relative urls in Select Panel Fields you have to hardcode your routes. But do not worry, that is easy to do.
+Since Kirby does not support relative urls in Select Panel Fields [below v2.4.2](https://github.com/getkirby/panel/issues/1035) you might have to hardcode your routes. But do not worry, that is easy to do.
 
 Visit the *Mailjet Plugin Example Page* in the frontend by clicking on *Open Preview* in the Panel. Find the output called `hash`. If it is not there make sure you are logged into the panel.
 
@@ -124,6 +124,15 @@ Edit the files `mj-example-contactslists.yml` and `mj-example-segments.yml` in y
 label: Segment
 type: select
 options: http://YOUR_DOMAIN_HERE/kirby-mailjet/PLUGIN_HASH_HERE/json/segments.json
+```
+
+or if you have Kirby v2.4.2
+
+```yml
+label: Segment
+type: select
+options: url
+url: kirby-mailjet/PLUGIN_HASH_HERE/json/segments.json
 ```
 
 Save the files and verify success in refreshing the browser tab showing *Mailjet Plugin Example Page* in Panel. Your Contactslist and Segments (if you have any) should be listed in their Select Panel Fields.
