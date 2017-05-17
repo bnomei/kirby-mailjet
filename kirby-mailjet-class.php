@@ -268,38 +268,48 @@ class KirbyMailjet {
 
 	/////////////////////////////////////
 	//
+	private static $_segments = null;
 	public static function segments() {
 		$mj = self::client();
 		if(!$mj) return null;
+		if(self::$_segments) return self::$_segments;
 
 		$cl = array();
 		$exclude = c::get('plugin.mailjet.json-segments.exclude', []);
 		$response = $mj->get(Resources::$Contactfilter, []);
-        foreach ($response->getData() as $r) {
-        	if(in_array($r['ID'], $exclude)) continue;
-        	if(in_array($r['Name'], $exclude)) continue;
+		if($response->success()) {
+	        foreach ($response->getData() as $r) {
+	        	if(in_array($r['ID'], $exclude)) continue;
+	        	if(in_array($r['Name'], $exclude)) continue;
 
-        	$cl[$r['ID']] = $r['Name'];
-        }
+	        	$cl[$r['ID']] = $r['Name'];
+	        }
+	        self::$_segments = $cl;
+	    }
 
         return $cl;
 	}
 
 	/////////////////////////////////////
 	//
+	private static $_contactslists = null;
 	public static function contactslists() {
 		$mj = self::client();
 		if(!$mj) return null;
+		if(self::$_contactslists) return self::$_contactslists;
 
 		$cl = array();
 		$exclude = c::get('plugin.mailjet.json-contactslists.exclude', []);
 		$response = $mj->get(Resources::$Contactslist, []);
-        foreach ($response->getData() as $r) {
-        	if(in_array($r['ID'], $exclude)) continue;
-        	if(in_array($r['Name'], $exclude)) continue;
+		if($response->success()) {
+	        foreach ($response->getData() as $r) {
+	        	if(in_array($r['ID'], $exclude)) continue;
+	        	if(in_array($r['Name'], $exclude)) continue;
 
-        	$cl[$r['ID']] = $r['Name'];
-        }
+	        	$cl[$r['ID']] = $r['Name'];
+	        }
+	        self::$_contactslists = $cl;
+	    }
 
         return $cl;
 	}
@@ -316,12 +326,14 @@ class KirbyMailjet {
 		} else {
 			$response = $mj->get(Resources::$Contactslist, ['filters'=>['Name'=>$contactslistname]]);
 	        $contactslistID = -1;
-	        foreach ($response->getData() as $r) {
-	            if($r['Name'] == $contactslistname) {
-	                $contactslistID = $r['ID'];
-	                break;
-	            }
-	        }
+	        if($response->success()) {
+		        foreach ($response->getData() as $r) {
+		            if($r['Name'] == $contactslistname) {
+		                $contactslistID = $r['ID'];
+		                break;
+		            }
+		        }
+		    }
 		}
 
         if($contactslistID == -1) {

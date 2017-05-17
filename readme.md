@@ -243,6 +243,10 @@ You can set these in your `site/config/config.php`.
 c::set('plugin.mailjet.logfile', kirby()->roots()->site().DS.'logs'.DS.'mailjet-'.date('Ym').'.log');
 ```
 
+### plugin.mailjet.json.cache
+- default: `300`
+- time in seconds to cache the json files for contactslists and segments
+
 ### plugin.mailjet.json-contactslists.exclude
 - default: `[]`
 - array of numeric ids to exclude from the `contactslists.json`
