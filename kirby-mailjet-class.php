@@ -84,7 +84,7 @@ class KirbyMailjet {
 			$mj = self::client();
 			$sa = self::senderAdress();
 			if($mj && $sa) {
-				$response = $mj->get(Resources::$Sender, ['filters' => ['Email' => $sa]]);
+				$response = $mj->get(Resources::$Sender, ['filters' => ['Email' => $sa], 'body' => null]);
 	            if($response->success()) {
 	            	foreach ($response->getData() as $r) {
 	            		if($r["Email"] == $sa) {
@@ -276,7 +276,7 @@ class KirbyMailjet {
 
 		$cl = array();
 		$exclude = c::get('plugin.mailjet.json-segments.exclude', []);
-		$response = $mj->get(Resources::$Contactfilter, []);
+		$response = $mj->get(Resources::$Contactfilter, ['body' => null]);
 		if($response->success()) {
 	        foreach ($response->getData() as $r) {
 	        	if(in_array($r['ID'], $exclude)) continue;
@@ -300,7 +300,7 @@ class KirbyMailjet {
 
 		$cl = array();
 		$exclude = c::get('plugin.mailjet.json-contactslists.exclude', []);
-		$response = $mj->get(Resources::$Contactslist, []);
+		$response = $mj->get(Resources::$Contactslist, ['body' => null]);
 		if($response->success()) {
 	        foreach ($response->getData() as $r) {
 	        	if(in_array($r['ID'], $exclude)) continue;
@@ -324,7 +324,7 @@ class KirbyMailjet {
 			$contactslistID = intval($contactslistname);
 
 		} else {
-			$response = $mj->get(Resources::$Contactslist, ['filters'=>['Name'=>$contactslistname]]);
+			$response = $mj->get(Resources::$Contactslist, ['filters'=>['Name'=>$contactslistname], 'body' => null]);
 	        $contactslistID = -1;
 	        if($response->success()) {
 		        foreach ($response->getData() as $r) {
@@ -361,7 +361,7 @@ class KirbyMailjet {
 		if(ctype_digit($segname)) {
 			$segidtry = intval($segname);
 
-			$response = $mj->get(Resources::$Contactfilter, []);
+			$response = $mj->get(Resources::$Contactfilter, ['body' => null]);
 	        foreach ($response->getData() as $r) {
 	        	if($segidtry == $r['ID']) {
 	        		$segid = $r['ID'];
@@ -370,7 +370,7 @@ class KirbyMailjet {
 	        }
 
 		} else {
-			$response = $mj->get(Resources::$Contactfilter, ['filters'=>['Name'=>$segname]]);
+			$response = $mj->get(Resources::$Contactfilter, ['filters'=>['Name'=>$segname], 'body' => null]);
 		
 	        foreach ($response->getData() as $r) {
 	        	if($segname == $r['Name']) {
@@ -583,7 +583,7 @@ class KirbyMailjet {
 		if($segid = a::get($campaign_body, 'SegmentationID', null)) {
 			$f['Segmentation'] = $segid;
 		}
-		$response = $mj->get(Resources::$Newsletter, ['filters' => $f]);
+		$response = $mj->get(Resources::$Newsletter, ['filters' => $f, 'body' => null]);
 
 		// might EXISTS so update
 		$found = false;
