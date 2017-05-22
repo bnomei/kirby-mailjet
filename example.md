@@ -1,4 +1,4 @@
-# Kirby Mailjet (ALPHA)
+# Kirby Mailjet (BETA)
 
 Kirby Mailjet makes sending emails with Mailjet simple. 
 

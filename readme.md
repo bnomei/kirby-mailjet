@@ -1,6 +1,6 @@
-# Kirby Mailjet (ALPHA)
+# Kirby Mailjet (BETA)
 
-![GitHub release](https://img.shields.io/github/release/bnomei/kirby-mailjet.svg?maxAge=1800) ![License](https://img.shields.io/badge/license-commercial-green.svg) ![Beta](https://img.shields.io/badge/Stage-alpha-blue.svg) ![Kirby Version](https://img.shields.io/badge/Kirby-2.4%2B-red.svg)
+![GitHub release](https://img.shields.io/github/release/bnomei/kirby-mailjet.svg?maxAge=1800) ![License](https://img.shields.io/badge/license-commercial-green.svg) ![Beta](https://img.shields.io/badge/Stage-beta-blue.svg) ![Kirby Version](https://img.shields.io/badge/Kirby-2.4%2B-red.svg)
 
 Kirby Mailjet makes sending emails with Mailjet simple. 
 
