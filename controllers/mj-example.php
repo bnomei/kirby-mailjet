@@ -108,7 +108,6 @@ return function($site, $pages, $page) {
 
         if($token == $check) { // success
 
-            $updatedContactslist = '';
             if(KirbyMailjet::updateContactslist(
                     'Newsletter Test', 
                     KirbyMailjet::LIST_ADDFORCE,
@@ -123,7 +122,7 @@ return function($site, $pages, $page) {
                 $optinStatus = 'failed';
             }
 
-            $emailSubject = 'Newsletter Opt-In '.$updatedContactslist;
+            $emailSubject = 'Newsletter Opt-In '.$optinStatus;
 
             $data = [
                 // mj-example-block-headline
