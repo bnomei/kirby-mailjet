@@ -10,7 +10,7 @@
 		$htmlFile = str_replace('.php', '.html', __FILE__);
 
 		$mustachedata = [
-			'text' => $data->text()->html()->value(), // string not Field-Object!
+			'footer' => $data->text()->html()->value(), // string not Field-Object!
 			'facebook' => url($data->facebook()),
 			'googleplus' => url($data->googleplus()),
 		];
@@ -33,7 +33,7 @@
 <mj-raw><!--PART:<?= $snippet ?>--></mj-raw>
 <mj-section mj-class="bgcolor" padding-top="96px">
 	<mj-column>
-        <mj-text mj-class="footer text">{{ text }}</mj-text>
+        <mj-text mj-class="footer text">{{ footer }}</mj-text>
         <mj-divider border-width="1px" border-style="solid" border-color="#71feac"/>
         <mj-social color="#71feac" padding-bottom="48px" mode="horizontal" display="google facebook" google-icon-color="#71feac" facebook-icon-color="#71feac" facebook-href="{{ facebook }}" google-href="{{ googleplus }}"/>
     </mj-column>

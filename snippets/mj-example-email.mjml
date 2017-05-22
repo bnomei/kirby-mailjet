@@ -43,46 +43,6 @@
         <!--/PART:mj-example-block-text-->
       </mj-raw>
       <mj-raw>
-        <!--PART:mj-example-block-hero-->
-      </mj-raw>
-      <mj-wrapper mj-class="bgcolor">
-        <mj-hero mode="fixed-height" height="200px" background-width="1200px" background-height="800px" background-url="{{ heroimage }}" background-color="#eafded" padding="48px 0px">
-          <mj-hero-content width="100%">
-            <mj-text mj-class="heroheadline">{{ heroheadline }}</mj-text>
-            <mj-button mj-class="button" href="{{ herolink }}">{{ herobutton }}</mj-button>
-          </mj-hero-content>
-        </mj-hero>
-      </mj-wrapper>
-      <mj-raw>
-        <!--/PART:mj-example-block-hero-->
-      </mj-raw>
-      <mj-raw>
-        <!--PART:mj-example-block-news-->
-      </mj-raw>
-      <mj-section mj-class="bgcolor">
-        <mj-column>
-          <mj-text mj-class="newsheadline">{{ newsheadline }}</mj-text>
-        </mj-column>
-      </mj-section>
-      <mj-wrapper mj-class="newsblock">
-        <mj-raw>{{# news }}</mj-raw>
-        <mj-section mj-class="newsitem">
-          <mj-column width="25%">
-            <mj-text mj-class="newsdate">{{ date }}</mj-text>
-          </mj-column>
-          <mj-column width="55%">
-            <mj-text>{{ text }}</mj-text>
-          </mj-column>
-          <mj-column width="20%" vertical-align="bottom">
-            <mj-button mj-class="button" padding="0" href="{{ link }}">&#8594;</mj-button>
-          </mj-column>
-        </mj-section>
-        <mj-raw>{{/ news }}</mj-raw>
-      </mj-wrapper>
-      <mj-raw>
-        <!--/PART:mj-example-block-news-->
-      </mj-raw>
-      <mj-raw>
         <!--PART:mj-example-block-footer-->
       </mj-raw>
       <mj-section mj-class="bgcolor" padding-top="96px">
