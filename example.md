@@ -96,6 +96,20 @@ c::set('plugin.mailjet.examples', true); // default: false
 
 > **Important:** On a production server you must disable the examples again for security reasons.
 
+Enable the blueprint for the example in your `site.yml`. Please adjust this to your needs as [explained in the docs](https://getkirby.com/docs/panel/blueprints/subpages-settings#templates-for-subpages). The most basic blueprint would look like this.
+
+```yaml
+title: Site
+
+# pages: default
+pages:
+  template:
+    - default
+    - mj-example
+
+# ...more fields...
+```
+
 Start the Kirby Panel and create a new page with the template `mj-example` *Mailjet Plugin Example Page* this plugin provides. It should look something like this.
 
 ![Example Page in Panel](http://bnomei.com/kirby-mailjet/example-page-in-panel-small.gif)
