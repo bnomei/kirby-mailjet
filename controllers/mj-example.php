@@ -1,6 +1,173 @@
 <?php
+
+use Uniform\Form;
+
 return function($site, $pages, $page) {
 
+	/////////////////////////////////////
+	// Opt-In Uniform
+	$form = new Form([
+        'firstname' => [
+            'rules'   => ['required'],
+            'message' => 'Please enter your firstname',
+        ],
+        'lastname' => [
+            'rules'   => ['required'],
+            'message' => 'Please enter your lastname',
+        ],
+        'email' => [
+            'rules'   => ['required', 'email'],
+            'message' => 'Please enter a valid email address',
+        ],
+    ]);
+
+    if (r::is('POST') && 
+    	$form->honeypotGuard() && // perform at least one action/check...
+    	$form->success() // ... now success can be determined
+    ) {
+
+    	$formFirstname = strip_tags( $form->data('firstname') );
+    	$formLastname  = strip_tags( $form->data('lastname') );
+    	$formEmail     = strip_tags( $form->data('email') );
+
+    	// Firstname Lastname <some@ema.il>
+    	$emailTo = implode(' ', 
+    		[
+	    		$formFirstname,
+	    		$formLastname,
+	    		'<'.$formEmail.'>'
+    		]
+    	);
+
+    	$emailSubject = 'Newsletter Opt-In Link';
+
+    	$optInLink = implode('',
+    		[
+    			$page->url(),
+    			'?newsletter=optin', // see #OPTIN
+    			'&firstname='.urlencode($formFirstname),
+    			'&lastname='. urlencode($formLastname),
+    			'&email='.    urlencode($formEmail),
+    			// add a token to check data. order is important. see #CHECK
+    			'&token='.sha1(
+    				KirbyMailjet::hash(). // this is unique for your server, never use it alone
+    				date('Ym'). // minimalistic timeout: current month
+    				$formFirstname.
+    				$formLastname.
+    				$formEmail
+    				),
+    		]
+    	);
+    	$data = [
+    		// mj-example-block-headline
+    		'headline' => $emailSubject,
+
+    		// mj-example-block-text
+    		'text' => '<p><a href="'.$optInLink.'">please click here</a></p>',
+    		'footer' => '',
+    	];
+    	if($htmlfile = KirbyMailjet::buildMJML('mj-example-email')) {
+    		KirbyMailjet::execMJML($htmlfile);
+    	}
+    	$emailBody = KirbyMailjet::renderMustache('mj-example-email', $data);
+
+        KirbyMailjet::sendMail([
+            'to' => $emailTo,
+            'from' => KirbyMailjet::senderAdress(),
+            'subject' => $emailSubject,
+            'body' => $emailBody,
+            'service' => KirbyMailjet::EMAIL_SERVICE, // send with mailjet
+            'options' => [
+                // 'Text-part' =>
+                'Mj-campaign' => $emailSubject
+            ]
+        ]);
+
+        go($page->url().'?newsletter=verify');
+		// or of you have a dedicated page...
+		// go(page('newsletter/verify')->url());
+        
+    }
+
+    /////////////////////////////////////
+	// Opt-In Link Handler
+	$optinStatus = null;
+	if(get('newsletter') == 'optin') { // #OPTIN
+		$linkFirstname = urldecode(get('firstname'));
+		$linkLastname = urldecode(get('lastname'));
+		$linkEmail = urldecode(get('email'));
+		$token = get('token');
+
+		$check = sha1( // #CHECK
+			KirbyMailjet::hash(). // this is unique for your server, never use it alone
+			date('Ym').
+			$linkFirstname.
+			$linkLastname.
+			$linkEmail
+		);
+
+		if($token == $check) { // success
+
+			$updatedContactslist = '';
+			if(KirbyMailjet::updateContactslist(
+                    'Newsletter Test', 
+                    KirbyMailjet::LIST_ADDFORCE,
+                    [
+                    	'email' => $linkEmail,
+                    	'firstname' => $linkFirstname,
+                    	'lastname' => $linkLastname,
+                    ]
+                )) {
+                $optinStatus = 'success';
+            } else {
+                $optinStatus = 'failed';
+            }
+
+			$emailSubject = 'Newsletter Opt-In '.$updatedContactslist;
+
+	    	$data = [
+	    		// mj-example-block-headline
+	    		'headline' => $emailSubject,
+
+	    		// mj-example-block-text
+	    		'text' => '<p>'.$optinStatus.'</p>',
+	    		'footer' => '',
+	    	];
+	    	if($htmlfile = KirbyMailjet::buildMJML('mj-example-email')) {
+	    		KirbyMailjet::execMJML($htmlfile);
+	    	}
+	    	$emailBody = KirbyMailjet::renderMustache('mj-example-email', $data);
+
+	        KirbyMailjet::sendMail([
+	            'to' => $linkEmail,
+	            'from' => KirbyMailjet::senderAdress(),
+	            'subject' => $emailSubject,
+	            'body' => $emailBody,
+	            'service' => KirbyMailjet::EMAIL_SERVICE, // send with mailjet
+	            'options' => [
+	                // 'Text-part' =>
+	                'Mj-campaign' => $emailSubject
+	            ]
+	        ]);
+
+		} else {
+			// data changed or timeout
+			$optinStatus = 'timeout';
+		}
+	}
+
+	/////////////////////////////////////
+	// Optin Link Handler Exit
+	if($optinStatus) {
+		// avoid dublicate optin submission using PRG-Pattern: https://wiki2.org/en/Post/Redirect/Get
+		// redirect away from optin link of email
+		go($page->url().'?newsletter='.$optinStatus);
+		// or of you have a dedicated page...
+		// go(page('newsletter/'.$optinStatus)->url());
+	}
+
+
+    /////////////////////////////////////
 	// prepare json response
 	$mailjetJSON = ['code' => 400];
 
@@ -70,35 +237,13 @@ return function($site, $pages, $page) {
 
 				$snippet = 'mj-example-newsletter';
 				$html = null;
-
-				// EXAMPLE USING PLUGIN SNIPPETS
-				$isSnippetInPluginFolder = true;
-				if($isSnippetInPluginFolder) {
-					if($htmlfile = KirbyMailjet::buildMJML(
-							$snippet, 
-							$isSnippetInPluginFolder  // this example only
-						)) {
-						KirbyMailjet::execMJML($htmlfile);
-					}
-				
-					$html = KirbyMailjet::renderMustache(
-						$snippet, 
-						$mustache, 
-						$isSnippetInPluginFolder // this example only
-					);
-
-				// YOUR CODE SHOULD LOOK LIKE THIS
-				} else {
-
-					if($htmlfile = KirbyMailjet::buildMJML($snippet)) {
-						KirbyMailjet::execMJML($htmlfile);
-					}
-				
-					$html = KirbyMailjet::renderMustache(
-						$snippet, 
-						$mustache
-					);
+				if($htmlfile = KirbyMailjet::buildMJML($snippet)) {
+					KirbyMailjet::execMJML($htmlfile);
 				}
+				$html = KirbyMailjet::renderMustache(
+					$snippet, 
+					$mustache
+				);
 
 				$campaign_body = [
 					    'Locale' => "en", // de_DE
@@ -167,6 +312,6 @@ return function($site, $pages, $page) {
 
 	// or frontend page view
 	} else {
-		return compact('mustache', 'mjmlCode');
+		return compact('mustache', 'mjmlCode', 'form');
 	}
 };

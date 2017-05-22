@@ -51,7 +51,6 @@ if(c::get('plugin.mailjet.buildersnippets', false)) {
 }
 */
 
-
 /****************************************
   TEMPLATES and CONTROLLERS
  ***************************************/

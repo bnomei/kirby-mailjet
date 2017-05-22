@@ -4,16 +4,16 @@ Kirby Mailjet makes sending emails with Mailjet simple.
 
 ## Responsive HTML Emails Example
 
-This will take no more than 60 minutes of your precious time but I ensure you it will be worth it.
+This will take no more than 60 minutes of your precious time.
 
 - install all requirements
 - setup mailjet account
 - copy files of global field definitions
 - edit two of these files
 - click 4 different buttons
-- fill out a form (soon)
-- click a link in an email (soon)
-- check your mailjet dashboard
+- fill out a form
+- click a link in an email
+- check your mailjet dashboard (optional)
 - recieve about half a dozend emails during the whole process
 
 ### Fields and Snippets, Mjml, Html, Mustache
@@ -87,6 +87,7 @@ Also copy **all** of provided snippets from the plugin to your `site/snippets` f
 
 > **Why copy?** The plugin could install these with the example but the examples should be disabled on prodution server. So you have to copy them sooner or later. Furthermore you will probably make adjustments to the button labels and snipepts etc to fit your needs and that should not happen in the plugins folder. Also I do not want to mess up [Kirby Builders snippet root folder](https://github.com/TimOetting/kirby-builder/blob/master/builder.php#L43).
 
+## Example Page
 
 ### Create Example Page
 
@@ -163,12 +164,17 @@ Add a email-adress if needed, Select a Contactslist then press the *Save*-Button
 - 4th one will publish the Newsletter and send it to the Contactslist. It will **not** allow you to publish it again, unless you pick a different Contactslist or Segment. But you can keep sending transactional emails and tests.
 
 
-### Newsletter double-optin form
+## Newsletter Double-Optin Form
 
-*Work in progress – will add it soon.*
+### Custom Contact-Properties in Mailjet
 
+For this example form to work you have to create `firstname` and `lastname` as [custom Contact-Properties in your Mailjet-Dashboard](https://app.mailjet.com/contacts/lists/properties).
 
-### Where to go from here?
+### Test the Form
+
+Then head over to the example frontend Page and fill out the form. You will get an email with a verification opt-in link. When clicking on that you will be subscribed to **Newsletter Test** and recieve a confirmation email.
+
+## Where to go from here?
 
 Take a look at the [mjml code flavoured with mustache](https://github.com/bnomei/kirby-mailjet/blob/master/snippets/mj-example-newsletter.php) or even copy it to the [Online Editor](https://mjml.io/try-it-live).
 
