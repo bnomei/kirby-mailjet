@@ -77,13 +77,15 @@ export PATH="$PATH:./node_modules/.bin"
 
 Read [all about it here](https://github.com/bnomei/kirby-mailjet#setupmailjetaccount).
 
-### Installation of Panel Fields
+### Installation of Panel Fields and Snippets
 
 This plugin comes with some example panel fields to get you started. You can find their their [global field definitions](https://getkirby.com/docs/panel/blueprints/global-field-definitions) in the [kirby-mailjet/blueprints/fields](https://github.com/bnomei/kirby-mailjet/blob/master/blueprints/fields/) folder.
 
 Copy **all** of provided global field definitions from the plugin to your `site/blueprints/fields` folder. Create the folder if needed. 
 
-> **Why copy?** The plugin could install these with the example but the examples should be disabled on prodution server. So you have to copy them sooner or later. Furthermore you will probably make adjustments to the button labels etc to fit your needs and that should not happen in the plugins folder.
+Also copy **all** of provided snippets from the plugin to your `site/snippets` folder. 
+
+> **Why copy?** The plugin could install these with the example but the examples should be disabled on prodution server. So you have to copy them sooner or later. Furthermore you will probably make adjustments to the button labels and snipepts etc to fit your needs and that should not happen in the plugins folder. Also I do not want to mess up [Kirby Builders snippet root folder](https://github.com/TimOetting/kirby-builder/blob/master/builder.php#L43).
 
 
 ### Create Example Page

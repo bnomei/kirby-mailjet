@@ -36,6 +36,9 @@ foreach ($blueprintsFields->files() as $file) {
   SNIPPETS
  ***************************************/
 
+/* manual file copy by user is better since examples disabled on production servers anyway.
+*/
+/*
 $snippets = new Folder(__DIR__ . DS . 'snippets');
 foreach ($snippets->files() as $file) {
   if($file->extension() == 'php') {
@@ -46,6 +49,7 @@ foreach ($snippets->files() as $file) {
 if(c::get('plugin.mailjet.buildersnippets', false)) {
 	c::set('buildersnippets.path', __DIR__ . DS . 'snippets');
 }
+*/
 
 
 /****************************************
