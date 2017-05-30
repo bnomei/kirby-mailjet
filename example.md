@@ -174,9 +174,9 @@ For this example form to work you have to create `firstname` and `lastname` as [
 
 Then head over to the example frontend Page and fill out the form. You will get an email with a verification opt-in link. When clicking on that you will be subscribed to **Newsletter Test** and recieve a confirmation email.
 
-## mjml, Snippets and Kirby Builder
+## In-Depth: mjml, Snippets and Kirby Builder
 
-An *master* snippet is used to compose the mjml file code. The *block* snippets are used to define repeatable blocks. In this example the *master* snippet for email and newsletter share some blocks. The controller calls the snippet and stores its output into an mjml file. Kirby Builder uses the blueprints to find the right *block* snippet.
+A *master* snippet is used to compose the mjml file code. The *block* snippets are used to define repeatable blocks. In this example the *master* snippet for email and newsletter share some blocks. The controller calls the snippet and stores its output into an mjml file. Kirby Builder uses the blueprints to find the right *block* snippet.
 
 ### Technical Details
 
@@ -208,7 +208,7 @@ To create a custom newsletter do the following. Start reusing existing blocks th
 - Then you need to make your local `mjml` watch it: `mjml -w mynewletter.mjml`. A html file should be created.
 - The html file is loaded and parsed by `renderMustache` to generate the email html code
 
-## Custom mjml Blocks
+### Custom mjml Blocks
 
 - Create a new snippet based on any existing *block*. Lets call it `myblock.php`
 - Update your master snippet `mynewsletter.php` to use the new block
