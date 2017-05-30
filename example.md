@@ -174,6 +174,47 @@ For this example form to work you have to create `firstname` and `lastname` as [
 
 Then head over to the example frontend Page and fill out the form. You will get an email with a verification opt-in link. When clicking on that you will be subscribed to **Newsletter Test** and recieve a confirmation email.
 
+## mjml, Snippets and Kirby Builder
+
+An *master* snippet is used to compose the mjml file code. The *block* snippets are used to define repeatable blocks. In this example the *master* snippet for email and newsletter share some blocks. The controller calls the snippet and stores its output into an mjml file. Kirby Builder uses the blueprints to find the right *block* snippet.
+
+### Technical Details
+
+When `buildMJML` is [called the contoller](https://github.com/bnomei/kirby-mailjet/blob/master/controllers/mj-example.php#L239) **mj-example-newsletter.php** with the name of the snippet **mj-example-newsletter**
+
+```php
+$snippet = 'mj-example-newsletter';
+$html = null;
+if($htmlfile = KirbyMailjet::buildMJML($snippet)) {
+    KirbyMailjet::execMJML($htmlfile);
+}
+$html = KirbyMailjet::renderMustache(
+    $snippet, 
+    $mustache
+);
+```
+
+- The output of [the snippet](https://github.com/bnomei/kirby-mailjet/blob/master/snippets/mj-example-newsletter.php) is written to an mjml file.
+- If you setup node.js `mjml` to watch the mjml file it will be converted into html. The class is trying to call `mjml` with `execMJML` but on localhost it [probably will not work](https://forum.getkirby.com/t/how-to-bash-it-right-make-local-apache-call-node-js-bin/7272) since node can not be called from localhost php afaik. But it also [splits the resulting html file into the html parts](https://github.com/bnomei/kirby-mailjet/blob/master/kirby-mailjet-class.php#L209) needed for the snippet to render preview in *Kirby Builder*. These are the html files with the same name as the *blocks*.
+- So if you setup your local mjml to watch the mjml file you should be fine and the html-blocks should be generated.
+
+### Custom Newsletter based on the Example
+
+To create a custom newsletter do the following. Start reusing existing blocks then change these.
+
+- Create a new snippet [based on mine](https://github.com/bnomei/kirby-mailjet/blob/master/snippets/mj-example-newsletter.php). lets call it `mynewsletter.php`.
+- Use the filename of `mynewsletter` in the [controller here](https://github.com/bnomei/kirby-mailjet/blob/master/controllers/mj-example.php#L237).
+- If calling the controller (like when using the *preview email button*) the new `mynewsletter.mjml` file should be created.
+- Then you need to make your local `mjml` watch it: `mjml -w mynewletter.mjml`. A html file should be created.
+- The html file is loaded and parsed by `renderMustache` to generate the email html code
+
+## Custom mjml Blocks
+
+- Create a new snippet based on any existing *block*. Lets call it `myblock.php`
+- Update your master snippet `mynewsletter.php` to use the new block
+- Then refresh the email preview. the controller should call `buildMJML` and  `execMJML`. This will create a updated mjml file, your watching `mjml` will create a html file and `execMJML` will split the html file generating one for your new block (it waits for 5 sec for mjml to finish the job). The `myblock.html` file now exists.
+- Last step is to tell *kirby builder* about the new block. You need to create new field blueprint for your block. Based on [the examples](https://github.com/bnomei/kirby-mailjet/tree/master/blueprints/fields) and add it to the builder [fieldsets here](https://github.com/bnomei/kirby-mailjet/blob/master/blueprints/mj-example.yml#L33) in the controller blueprint.
+
 ## Where to go from here?
 
 Take a look at the [mjml code flavoured with mustache](https://github.com/bnomei/kirby-mailjet/blob/master/snippets/mj-example-newsletter.php) or even copy it to the [Online Editor](https://mjml.io/try-it-live).
