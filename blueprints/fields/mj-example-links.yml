@@ -1,0 +1,9 @@
+#global def
+#label: 'Links'
+type: info
+text: >
+  <a class="btn btn-rounded mj-links" target="blank" href="https://app.mailjet.com/dashboard">Dashboard</a>
+  <a class="btn btn-rounded mj-links" target="blank" href="https://app.mailjet.com/campaigns">Campaigns</a>
+  <a class="btn btn-rounded mj-links" target="blank" href="https://app.mailjet.com/contacts">Contactslists</a>
+  <a class="btn btn-rounded mj-links" target="blank" href="https://app.mailjet.com/segmentation">Segmentation</a>
+  <style>.text a.mj-links{border: 2px solid #000;margin: 0 0.5em;}</style>
