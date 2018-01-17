@@ -47,7 +47,7 @@ email::$services[KirbyMailjet::EMAIL_SERVICE] = function($email) {
     if($response->success()) {
       $send = true;
     } else {
-      $error = KirbyMailjet::getError($response);
+      $error = KirbyMailjet::getResponseError($response);
     }
   }
 
