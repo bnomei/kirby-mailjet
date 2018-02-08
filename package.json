@@ -1,7 +1,7 @@
 {
   "name": "kirby-mailjet",
   "description": "Kirby Mailjet makes sending emails with Mailjet simple.",
-  "version": "0.7.3",
+  "version": "0.7.4",
   "author": "Bruno Meilick",
   "type": "kirby-plugin",
   "license": "Commercial"

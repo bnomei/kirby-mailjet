@@ -38,7 +38,7 @@ class KirbyMailjet {
 		$error = null;
 		if(!$response->success()) {
 			$d = $response->getData();
-			$error = l::get('mailjet-error-dump') . PHP_EOL . 
+			$error = l::get('mailjet-error-dump') . PHP_EOL .
 				implode(PHP_EOL, [
 					'StatusCode: ' . a::get($d, 'StatusCode', ''),
 					'ErrorMessage: ' . a::get($d, 'ErrorMessage', ''),
@@ -91,7 +91,7 @@ class KirbyMailjet {
 	               			self::$_fromname = $r['Name'];
 	               		}
 	               	}
-	            } 
+	            }
 	            if(self::$_fromname == null) {
 	            	self::pushLog(str_replace('{email}', $sa, l::get('mailjet-error-sendername')));
 	            }
@@ -104,7 +104,7 @@ class KirbyMailjet {
 	// build mjml template (with mustache code)
 	public static function buildMJML($snippet, $pluginFolder = false) {
 		if(!self::is_localhost()) return null;
-		
+
 		$file = null;
 
 		try {
@@ -145,7 +145,7 @@ class KirbyMailjet {
 	// mjml to html template (with mustache code) on localhost
 	public static function execMJML($snippet) {
 		if(!self::is_localhost()) return null;
-		
+
 		if(f::exists($snippet)) {
 			$mjmlfile = str_replace('.mjml','',$snippet);
 		}
@@ -193,7 +193,7 @@ class KirbyMailjet {
 		} elseif($shOrBat == 'bat') {
 			f::write($script, $cmd);
 			$ecx = "cmd /c \"{$script}\"";
-			system($ecx);		
+			system($ecx);
 
 		}
 
@@ -208,7 +208,7 @@ class KirbyMailjet {
 		$htmlfile = $mjmlfile . '.html';
 		if(f::exists($htmlfile)) {
 			$html = f::read($htmlfile);
-			preg_match_all('/(<!--PART:([\w\d\s\-]+)-->)([\w\W]+)(<!--\/PART:(\2)-->)/is', $html, $matches); 
+			preg_match_all('/(<!--PART:([\w\d\s\-]+)-->)([\w\W]+)(<!--\/PART:(\2)-->)/is', $html, $matches);
 			//var_dump($matches);
 
 			if($matches){
@@ -224,7 +224,7 @@ class KirbyMailjet {
 				}
 			}
 		}
-		
+
 		return $cmd;
 	}
 
@@ -233,7 +233,7 @@ class KirbyMailjet {
 	public static function renderMustache($file, $mustachedata = [], $pluginFolder = false) {
 
 		$out = null;
-		
+
 		if(!f::exists($file) && $pluginFolder) {
 			$file = kirby()->roots()->site() . DS . 'plugins' . DS . 'kirby-mailjet' . DS . 'snippets' . DS . $file . '.html';
 		}
@@ -251,7 +251,7 @@ class KirbyMailjet {
 					 	return $value; // https://github.com/bobthecow/mustache.php/wiki
 					 }
 					]);
-			
+
 				$out = $mustache->render(
 					f::read($file),
 					$mustachedata
@@ -371,7 +371,7 @@ class KirbyMailjet {
 
 		} else {
 			$response = $mj->get(Resources::$Contactfilter, ['filters'=>['Name'=>$segname], 'body' => null]);
-		
+
 	        foreach ($response->getData() as $r) {
 	        	if($segname == $r['Name']) {
 	        		$segid = $r['ID'];
@@ -391,7 +391,7 @@ class KirbyMailjet {
 	public static function updateContactslist($contactslistname, $action, $data) {
 		$mj = self::client();
 		if(!$mj) return null;
-		
+
 		$contactslistID = self::getContactslist($contactslistname);
 		if(!$contactslistID) return null;
 
@@ -434,7 +434,7 @@ class KirbyMailjet {
             }
             if($response->getData()['StatusCode'] == 400) {
                 $contactID = strtolower($email);
-            } 
+            }
             if($contactID == -1) {
             	self::pushLog(str_replace('{email}',$email,l::get('mailjet-error-contact')));
             	return false;
@@ -449,9 +449,9 @@ class KirbyMailjet {
                     ]
                 ]
             ];
-            
+
             $response = $mj->post(
-            		Resources::$ContactManagecontactslists, 
+            		Resources::$ContactManagecontactslists,
             		['id' => $contactID, 'body' => $body]
             	);
 
@@ -469,13 +469,13 @@ class KirbyMailjet {
                 }
 
                 // update contactdata
-                $response = $mj->put(Resources::$Contactdata, [ 
+                $response = $mj->put(Resources::$Contactdata, [
                     'id' => $contactID,
                     'body' => ['Data' => $dataToAdd]
                 ]);
                 if($response->success()) {
                     //$contactID = $response->getData()[0]['ID']; // first element
-                } else {
+                } else if($response->getData()) {
                     $error = l::get('mailjet-error-dump').a::show($response->getData(), true);
                     self::pushLog($error);
                 }
@@ -487,7 +487,7 @@ class KirbyMailjet {
             return $error == null ? true : $error;
 
         } // addforce
-        
+
         return null;
 	}
 
@@ -506,7 +506,7 @@ class KirbyMailjet {
 			if (!$emailKirby || !$emailKirby->send()) {
 				$msg = str_replace(
 					'{email}',
-					a::get($params, 'to','MISSING'), 
+					a::get($params, 'to','MISSING'),
 					l::get('mailjet-error-sendmail-failed')
 				);
 				throw new Error($msg);
@@ -519,7 +519,7 @@ class KirbyMailjet {
 		}
 		return true;
 	}
-	
+
 	/////////////////////////////////////
 	// send newsletter
 	// default is just a test
@@ -552,7 +552,7 @@ class KirbyMailjet {
 		    'Url' => trim($purl),
 		];
 		*/
-	
+
 		$campain_keys = ['Locale', 'Sender', 'SenderEmail', 'Subject', 'Title', 'Url'];
 		$missing = a::missing($campaign_body, $campain_keys);
 		if(count($missing) > 0) {
@@ -566,7 +566,7 @@ class KirbyMailjet {
 
 		/////////////////////////////////
 		/// CAMPAIN GET/CREATE
-		/// 
+		///
 		// 1) get campain newsletter or create
 		$campaign_id = -1;
 		$f = [
@@ -600,7 +600,7 @@ class KirbyMailjet {
 				}
 
 				$found = true;
-				$campaign_id = $campaign['ID']; 
+				$campaign_id = $campaign['ID'];
 				$isDraft = $campaign['Status'] == 0;
 
 				// do not create or update new if exists but is not draft
@@ -648,7 +648,7 @@ class KirbyMailjet {
 
 		/////////////////////////////////
 		/// CAMPAIN BODY POST/PUT
-		/// 
+		///
 		// 2) post/put detail
 		/*
 		$campaign_content = [
@@ -669,10 +669,10 @@ class KirbyMailjet {
 
 		/////////////////////////////////
 		/// CAMPAIN TEST OR CONTACTSLIST
-		/// 
+		///
 		// TEST now
 		if($hasTestEmail) {
-			$response = $mj->post(Resources::$NewsletterTest, ['id' => $campaign_id, 'body' => 
+			$response = $mj->post(Resources::$NewsletterTest, ['id' => $campaign_id, 'body' =>
 				['Recipients' => [['Email' => $testEmail]]]
 			]);
 			if($response->success()) {
@@ -703,7 +703,7 @@ class KirbyMailjet {
 		// PUBLISH to contactslist
 		} else if($hasPublish) {
 			$response = $mj->post(Resources::$NewsletterSend, ['id' => $campaign_id]);
-			if($response->success()) { 
+			if($response->success()) {
 				$jsonResponse['code'] = 200;
 				$jsonResponse['message'] = str_replace(['{newsletter}','{contactlist}'], [$campaign_id, $contactslistID], l::get('mailjet-success-newsletter-publish'));
 				self::pushLog(trim($jsonResponse['message']), false);
@@ -713,7 +713,7 @@ class KirbyMailjet {
 				self::pushLog(trim($jsonResponse['message']).PHP_EOL.self::getResponseError($response));
 				return $jsonResponse;
 			}
-			
+
 		}
 
 		return $jsonResponse;
