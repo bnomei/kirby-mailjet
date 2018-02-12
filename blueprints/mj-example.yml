@@ -49,6 +49,7 @@ fields:
     type: headline
     label: Kirby Mailjet
 
+  mjhash: mj-example-hash
   mjcontactslist: mj-example-contactslists
   mjsegment: mj-example-segment
   mjemail: mj-example-email
@@ -57,4 +58,3 @@ fields:
   mjtrans: mj-example-trans
   mjtest: mj-example-test
   mjpublish: mj-example-newsletter
-

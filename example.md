@@ -1,6 +1,6 @@
 # Kirby Mailjet (BETA)
 
-Kirby Mailjet makes sending emails with Mailjet simple. 
+Kirby Mailjet makes sending emails with Mailjet simple.
 
 ## Responsive HTML Emails Example
 
@@ -58,7 +58,7 @@ Use Kirby Builder to build html code for a responsive email. Make Kirby Builder 
 - Tim Ötting's [Kirby Builder](https://github.com/TimOetting/kirby-builder), free
 - Martin Zurowietz's [Kirby Uniform](https://github.com/mzur/kirby-uniform), free
 
-### Install Requirements 
+### Install Requirements
 
 Using [Kirby CLI](https://github.com/getkirby/cli) and [npm for mjml](https://mjml.io/download).
 
@@ -81,9 +81,9 @@ Read [all about it here](https://github.com/bnomei/kirby-mailjet#setupmailjetacc
 
 This plugin comes with some example panel fields to get you started. You can find their their [global field definitions](https://getkirby.com/docs/panel/blueprints/global-field-definitions) in the [kirby-mailjet/blueprints/fields](https://github.com/bnomei/kirby-mailjet/blob/master/blueprints/fields/) folder.
 
-Copy **all** of provided global field definitions from the plugin to your `site/blueprints/fields` folder. Create the folder if needed. 
+Copy **all** of provided global field definitions from the plugin to your `site/blueprints/fields` folder. Create the folder if needed.
 
-Also copy **all** of provided snippets from the plugin to your `site/snippets` folder. 
+Also copy **all** of provided snippets from the plugin to your `site/snippets` folder.
 
 > **Why copy?** The plugin could install these with the example but the examples should be disabled on prodution server. So you have to copy them sooner or later. Furthermore you will probably make adjustments to the button labels and snipepts etc to fit your needs and that should not happen in the plugins folder. Also I do not want to mess up [Kirby Builders snippet root folder](https://github.com/TimOetting/kirby-builder/blob/master/builder.php#L43).
 
@@ -127,7 +127,7 @@ But the Select Fields will not work yet. Lets fix that.
 
 Since Kirby does not support relative urls in Select Panel Fields [below v2.4.2](https://github.com/getkirby/panel/issues/1035) you might have to hardcode your routes. But do not worry, that is easy to do.
 
-Visit the *Mailjet Plugin Example Page* in the frontend by clicking on *Open Preview* in the Panel. Find the output called `hash`. If it is not there make sure you are logged into the panel.
+Visit the *Mailjet Plugin Example Page* in the panel and find the Kirby-Mailjet-Hash Field. Alternatively in the frontend by clicking on *Open Preview* in the Panel then locate the output called `hash`. If it is not there make sure you are logged into the panel.
 
 > **Why use a hash in the routes URL?** The hash is unique for your server and not public unless you tell someone what it is. That way your mailjet data is kept private but can still be accessed from the panel. Please, do not forget to [disable examples on production servers](https://github.com/bnomei/kirby-mailjet#pluginmailjetexamples)!
 
@@ -189,7 +189,7 @@ if($htmlfile = KirbyMailjet::buildMJML($snippet)) {
     KirbyMailjet::execMJML($htmlfile);
 }
 $html = KirbyMailjet::renderMustache(
-    $snippet, 
+    $snippet,
     $mustache
 );
 ```
@@ -219,7 +219,6 @@ To create a custom newsletter do the following. Start reusing existing blocks th
 
 Take a look at the [mjml code flavoured with mustache](https://github.com/bnomei/kirby-mailjet/blob/master/snippets/mj-example-newsletter.php) or even copy it to the [Online Editor](https://mjml.io/try-it-live).
 
-Check out the [controller](https://github.com/bnomei/kirby-mailjet/blob/master/controllers/mj-example.php) and [template](https://github.com/bnomei/kirby-mailjet/blob/master/templates/mj-example.php) how the example does its magic and weave your own based on that. 
+Check out the [controller](https://github.com/bnomei/kirby-mailjet/blob/master/controllers/mj-example.php) and [template](https://github.com/bnomei/kirby-mailjet/blob/master/templates/mj-example.php) how the example does its magic and weave your own based on that.
 
 If you find any issues, please [create a new issue](https://github.com/bnomei/kirby-mailjet/issues/new) or join the discussions in the [Kirby Forum](https://forum.getkirby.com/search?q=kirby-mailjet).
-
