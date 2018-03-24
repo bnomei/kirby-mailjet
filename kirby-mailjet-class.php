@@ -476,7 +476,7 @@ class KirbyMailjet {
                 if($response->success()) {
                     //$contactID = $response->getData()[0]['ID']; // first element
                 } else if($response->getData()) {
-                    $error = l::get('mailjet-error-dump').a::show($response->getData(), true);
+                    $error = l::get('mailjet-error-dump').a::show($response->getData(), false);
                     self::pushLog($error);
                 }
             } else  {
@@ -513,7 +513,7 @@ class KirbyMailjet {
 			}
 		}
 		catch (Error $e) {
-			$msg = $e->getMessage() . PHP_EOL . a::show($params, true);
+			$msg = $e->getMessage() . PHP_EOL . a::show($params, false);
 			self::pushLog($msg);
 			return false;
 		}
