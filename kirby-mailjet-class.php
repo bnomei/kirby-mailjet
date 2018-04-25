@@ -300,7 +300,7 @@ class KirbyMailjet {
 
 		$cl = array();
 		$exclude = c::get('plugin.mailjet.json-contactslists.exclude', []);
-		$response = $mj->get(Resources::$Contactslist, ['body' => null]);
+		$response = $mj->get(Resources::$Contactslist, ['body' => null, 'filters' => ['Limit' => '0']]);
 		if($response->success()) {
 	        foreach ($response->getData() as $r) {
 	        	if(in_array($r['ID'], $exclude)) continue;
