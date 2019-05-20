@@ -1,35 +1,34 @@
 <?php
 
-	$isPanelBuilder = isset($page) && isset($data);
+    $isPanelBuilder = isset($page) && isset($data);
 
-	/************************************
-	 * Panel Kirby Builder CALL
-	 */
-	if($isPanelBuilder == true){
-		
-		$htmlFile = str_replace('.php', '.html', __FILE__);
+    /************************************
+     * Panel Kirby Builder CALL
+     */
+    if ($isPanelBuilder == true) {
+        $htmlFile = str_replace('.php', '.html', __FILE__);
 
-		$mustachedata = [
-			'heroheadline' => $data->heroheadline()->html()->value(), // string not Field-Object!
-			'herobutton' => $data->herobutton()->html()->value(), // string not Field-Object!
-			'herolink' => url($data->herolink()->value()),
-			'heroimage' => url($data->heroimage()->value()),
-		];
+        $mustachedata = [
+            'heroheadline' => $data->heroheadline()->html()->value(), // string not Field-Object!
+            'herobutton' => $data->herobutton()->html()->value(), // string not Field-Object!
+            'herolink' => url($data->herolink()->value()),
+            'heroimage' => url($data->heroimage()->value()),
+        ];
 
-		//a::show($mustachedata);
-		if(isset($json) && $json) {
-			echo a::json($mustachedata);
-		} else {
-			echo KirbyMailjet::renderMustache($htmlFile, $mustachedata);
-		}
-	}
+        //a::show($mustachedata);
+        if (isset($json) && $json) {
+            echo a::json($mustachedata);
+        } else {
+            echo KirbyMailjet::renderMustache($htmlFile, $mustachedata);
+        }
+    }
 
-	/************************************
-	 * Kirbymailjet::buildMJML CALL
-	 */
-	if($isPanelBuilder == false):
+    /************************************
+     * Kirbymailjet::buildMJML CALL
+     */
+    if ($isPanelBuilder == false):
 
-		$snippet = basename(__FILE__, '.php');
+        $snippet = basename(__FILE__, '.php');
 ?>
 <mj-raw><!--PART:<?= $snippet ?>--></mj-raw>
 <mj-wrapper mj-class="bgcolor">

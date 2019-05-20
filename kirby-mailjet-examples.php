@@ -6,13 +6,13 @@
 
 $fields = new Folder(__DIR__ . DS . 'fields');
 foreach ($fields->children() as $folder) {
-	$folderFiles = new Folder($folder->root());
-	foreach ($folderFiles->files() as $file) {
-		// field root
-		if($file->extension() == 'php') {
-			$kirby->set('field', $file->name(), $file->dir());
-		}
-	}
+    $folderFiles = new Folder($folder->root());
+    foreach ($folderFiles->files() as $file) {
+        // field root
+        if ($file->extension() == 'php') {
+            $kirby->set('field', $file->name(), $file->dir());
+        }
+    }
 }
 
 /****************************************
@@ -21,7 +21,7 @@ foreach ($fields->children() as $folder) {
 
 $blueprints = new Folder(__DIR__ . DS . 'blueprints');
 foreach ($blueprints->files() as $file) {
-  $kirby->set('blueprint', $file->name(), $file->root());
+    $kirby->set('blueprint', $file->name(), $file->root());
 }
 /* manual file copy by user is better since examples disabled on production servers anyway.
 */
@@ -42,12 +42,12 @@ foreach ($blueprintsFields->files() as $file) {
 $snippets = new Folder(__DIR__ . DS . 'snippets');
 foreach ($snippets->files() as $file) {
   if($file->extension() == 'php') {
-    $kirby->set('snippet', $file->name(), $file->root());  
+    $kirby->set('snippet', $file->name(), $file->root());
   }
 }
 // https://github.com/TimOetting/kirby-builder/blob/master/builder.php#L43
 if(c::get('plugin.mailjet.buildersnippets', false)) {
-	c::set('buildersnippets.path', __DIR__ . DS . 'snippets');
+    c::set('buildersnippets.path', __DIR__ . DS . 'snippets');
 }
 */
 
@@ -63,10 +63,10 @@ $kirby->set('template', 'mj-example', __DIR__ . DS . 'templates' . DS . 'mj-exam
   HOOKS
  ***************************************/
 
-$kirby->set('hook', 'panel.page.create', function($page) {
-if($page->template() == 'mj-example') {
-  try {
-    $builder = [
+$kirby->set('hook', 'panel.page.create', function ($page) {
+    if ($page->template() == 'mj-example') {
+        try {
+            $builder = [
       [
         'headline' => 'Responsive Email Builder',
         '_fieldset' => 'headline',
@@ -93,12 +93,12 @@ if($page->template() == 'mj-example') {
         '_fieldset' => 'footer',
       ],
     ];
-    $page->update([
+            $page->update([
       'title' => 'Mailjet Plugin Example Page',
       'builder' => yaml::encode($builder),
     ]);
 
-    $subpages = [
+            $subpages = [
       [
         'title' => 'Adipiscing',
         'text' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
@@ -112,16 +112,15 @@ if($page->template() == 'mj-example') {
         'text' => 'In imperdiet est sit amet tincidunt pellentesque.',
       ],
     ];
-    foreach($subpages as $subpage) {
-      $page->create(
-        $page->diruri().'/'.str::slug($subpage['title']),
-        'default',
-        $subpage
+            foreach ($subpages as $subpage) {
+                $page->create(
+          $page->diruri().'/'.str::slug($subpage['title']),
+          'default',
+          $subpage
       );
+            }
+        } catch (Exception $ex) {
+            // echo $ex->getMessage();
+        }
     }
-
-  } catch(Exception $ex) {
-    // echo $ex->getMessage();
-  }
-}
 });

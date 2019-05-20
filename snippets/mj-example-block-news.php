@@ -1,47 +1,46 @@
 <?php
 
-	$isPanelBuilder = isset($page) && isset($data);
+    $isPanelBuilder = isset($page) && isset($data);
 
-	/************************************
-	 * Panel Kirby Builder CALL
-	 */
-	if($isPanelBuilder == true){
-		
-		$htmlFile = str_replace('.php', '.html', __FILE__);
+    /************************************
+     * Panel Kirby Builder CALL
+     */
+    if ($isPanelBuilder == true) {
+        $htmlFile = str_replace('.php', '.html', __FILE__);
 
-		$news = array();
-		foreach ($page->children()/*->visible()*/ as $subpage) {
-			$utm = implode([
-					'?utm_source='.urlencode(site()->title()->value()),
-					'&utm_medium=email',
-					'&utm_campaign='.$page->slug(), // using slug of newsletter, not slug of subpage
-				]);
-			$news[] = [
-				'date' => date('m/d/Y', $subpage->modified()),
-				'text' => $subpage->text()->html()->toString(),
-				'link' => url($subpage->url().$utm),
-			];
-		}
+        $news = array();
+        foreach ($page->children()/*->visible()*/ as $subpage) {
+            $utm = implode([
+                    '?utm_source='.urlencode(site()->title()->value()),
+                    '&utm_medium=email',
+                    '&utm_campaign='.$page->slug(), // using slug of newsletter, not slug of subpage
+                ]);
+            $news[] = [
+                'date' => date('m/d/Y', $subpage->modified()),
+                'text' => $subpage->text()->html()->toString(),
+                'link' => url($subpage->url().$utm),
+            ];
+        }
 
-		$mustachedata = [
-			'newsheadline' => $data->newsheadline()->html()->value(),
-			'news' => $news,
-		];
+        $mustachedata = [
+            'newsheadline' => $data->newsheadline()->html()->value(),
+            'news' => $news,
+        ];
 
-		//a::show($mustachedata);
-		if(isset($json) && $json) {
-			echo a::json($mustachedata);
-		} else {
-			echo KirbyMailjet::renderMustache($htmlFile, $mustachedata);
-		}
-	}
+        //a::show($mustachedata);
+        if (isset($json) && $json) {
+            echo a::json($mustachedata);
+        } else {
+            echo KirbyMailjet::renderMustache($htmlFile, $mustachedata);
+        }
+    }
 
-	/************************************
-	 * Kirbymailjet::buildMJML CALL
-	 */
-	if($isPanelBuilder == false):
+    /************************************
+     * Kirbymailjet::buildMJML CALL
+     */
+    if ($isPanelBuilder == false):
 
-		$snippet = basename(__FILE__, '.php');
+        $snippet = basename(__FILE__, '.php');
 ?>
 <mj-raw><!--PART:<?= $snippet ?>--></mj-raw>
 <mj-section mj-class="bgcolor">

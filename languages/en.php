@@ -1,6 +1,6 @@
 <?php
 l::set([
-	'mailjet-error-dump' => 'ERROR: ',
+    'mailjet-error-dump' => 'ERROR: ',
     'mailjet-error-client' => 'Mailjet authentification failed.',
     'mailjet-error-contact' => 'Contact \'{email}\' could not be created.',
     'mailjet-error-contactlist-change' => 'Contactlist \'{contactlist}\' rejected \'{cmd}\' of contact \'{email}\'.',

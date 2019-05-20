@@ -1,4 +1,5 @@
 <?php
+
 /**
  * PHP version 5
  *
@@ -17,22 +18,15 @@ use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ServerException;
 
-/**
- * This is the Mailjet Request class
- * @category Mailjet_API
- * @package  Mailjet-apiv3
- * @author Guillaume Badi <gbadi@mailjet.com>
- * @license MIT https://licencepath.com
- * @link http://link.com
- */
-class Request extends GuzzleClient
-{
+class Request extends GuzzleClient {
+
     private $method;
     private $url;
     private $filters;
     private $body;
     private $auth;
     private $type;
+    private $requestOptions = [];
 
     /**
      * Build a new Http request
@@ -43,12 +37,11 @@ class Request extends GuzzleClient
      * @param array  $body    Mailjet resource body
      * @param string $type    Request Content-type
      */
-    public function __construct($auth, $method, $url, $filters, $body, $type)
-    {
+    public function __construct($auth, $method, $url, $filters, $body, $type, array $requestOptions = []) {
         parent::__construct(['defaults' => [
-            'headers' => [
-                'user-agent' => Config::USER_AGENT . phpversion() . '/' . Client::WRAPPER_VERSION
-            ]
+                'headers' => [
+                    'user-agent' => Config::USER_AGENT . phpversion() . '/' . Client::WRAPPER_VERSION
+                ]
         ]]);
         $this->type = $type;
         $this->auth = $auth;
@@ -56,6 +49,7 @@ class Request extends GuzzleClient
         $this->url = $url;
         $this->filters = $filters;
         $this->body = $body;
+        $this->requestOptions = $requestOptions;
     }
 
     /**
@@ -64,27 +58,38 @@ class Request extends GuzzleClient
      * @param $call
      * @return Response the call response
      */
-    public function call($call)
-    {
+    public function call($call) {
         $payload = [
-            'headers'  => ['content-type' => $this->type],
             'query' => $this->filters,
-            'auth' => $this->auth,
             ($this->type === 'application/json' ? 'json' : 'body') => $this->body,
         ];
-
+        
+        $authArgsCount = count($this->auth);
+        $headers = [
+            'content-type' => $this->type
+        ];
+        
+        if ($authArgsCount > 1) {
+            $payload['auth'] = $this->auth;
+        } else {
+            $headers['Authorization'] = 'Bearer ' . $this->auth[0];
+        }
+        
+        $payload['headers'] = $headers;
+        
+        if ((! empty($this->requestOptions)) && (is_array($this->requestOptions))) {
+            $payload = array_merge_recursive($payload, $this->requestOptions);
+        }
+        
         $response = null;
         if ($call) {
             try {
                 $response = call_user_func_array(
-                    array($this, strtolower($this->method)), [
-                    $this->url, $payload]
+                        [$this, strtolower($this->method)], [$this->url, $payload]
                 );
-            }
-            catch (ClientException $e) {
+            } catch (ClientException $e) {
                 $response = $e->getResponse();
-            }
-            catch (ServerException $e) {
+            } catch (ServerException $e) {
                 $response = $e->getResponse();
             }
         }
@@ -95,8 +100,7 @@ class Request extends GuzzleClient
      * Filters getters
      * @return array Request filters
      */
-    public function getFilters()
-    {
+    public function getFilters() {
         return $this->filters;
     }
 
@@ -104,8 +108,7 @@ class Request extends GuzzleClient
      * Http method getter
      * @return string Request method
      */
-    public function getMethod()
-    {
+    public function getMethod() {
         return $this->method;
     }
 
@@ -113,8 +116,7 @@ class Request extends GuzzleClient
      * Call Url getter
      * @return string Request Url
      */
-    public function getUrl()
-    {
+    public function getUrl() {
         return $this->url;
     }
 
@@ -122,8 +124,7 @@ class Request extends GuzzleClient
      * Request body getter
      * @return array request body
      */
-    public function getBody()
-    {
+    public function getBody() {
         return $this->body;
     }
 
@@ -131,8 +132,8 @@ class Request extends GuzzleClient
      * Auth getter. to discuss
      * @return string Request auth
      */
-    public function getAuth()
-    {
+    public function getAuth() {
         return $this->auth;
     }
+
 }

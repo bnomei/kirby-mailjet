@@ -1,0 +1,18 @@
+<?php
+
+$finder = PhpCsFixer\Finder::create()
+    ->exclude('vendor')
+    ->exclude('node_modules')
+    ->exclude('src')
+    ->exclude('kirby')
+    ->exclude('templates')
+    ->exclude('widgets')
+    ->in(__DIR__)
+;
+
+return PhpCsFixer\Config::create()
+    ->setRules([
+        '@PSR2' => true,
+    ])
+    ->setFinder($finder)
+;
