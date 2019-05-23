@@ -1,0 +1,10 @@
+# global def
+label: Sender
+type: select
+width: 1/1
+# URL to route needs to be hardcoded if you use kirby version < 2.4.2
+# https://github.com/getkirby/panel/issues/1035
+options: http://YOUR_DOMAIN_HERE/kirby-mailjet/PLUGIN_HASH_HERE/json/senders.json
+# since kirby version 2.4.2
+#options: url
+#url: kirby-mailjet/PLUGIN_HASH_HERE/json/senders.json

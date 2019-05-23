@@ -53,6 +53,9 @@ fields:
   mjcontactslist: mj-example-contactslists
   mjsegment: mj-example-segment
   mjemail: mj-example-email
+  mjscheduledate: mj-schedule-date
+  mjscheduletime: mj-schedule-time
+  mjsenders: mj-senders
   mjreminder: mj-example-save-reminder
   mjpreview: mj-example-preview
   mjtrans: mj-example-trans

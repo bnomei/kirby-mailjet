@@ -18,6 +18,8 @@ But if you have your own toolchain to create responsive HTML code for emails you
 - add attachements to emails
 - add and remove Contacts from Contactslists
 - test and publish Newsletters
+- publish Newsletters on a Schedule
+- choose Mailjet Sender Adress
 - Panel Fields to access Contactslists and Segments
 - Panel Buttons to send tests and publish (Kirby Opener required)
 - example how to create responsive HTML emails
@@ -146,6 +148,10 @@ if(KirbyMailjet::sendMail($params)){
 $senderEmail = KirbyMailjet::senderAdress();
 // or
 $senderEmail = KirbyMailjet::senderAdress('my@email.com');
+// or
+if ($page->mjsender()->isNotEmpty()) {
+    $senderEmail = $page->mjsender()->value();
+}
 
 // the subject is most important since that will be used 
 // to identify your Newsletter in combination with 
@@ -193,6 +199,7 @@ KirbyMailjet::sendNewsletter(
   $campaign_body,
   $campaign_content,
   'my@email.com', // email-adress to send test to or string 'Publish'
+  $schedule, // `null`/`'now'`, a timestamp or an ISO 8601 formatted date (`date('c')`) at UTC
 );
 
 // you can enable logging in config file like this
@@ -201,6 +208,18 @@ KirbyMailjet::sendNewsletter(
 if(KirbyMailjet::hasErrors()) {
   a::show(KirbyMailjet::errors());
 }
+```
+
+**schedule timezone convert example**
+```php
+$schedule = null;
+if ($page->mjscheduledate()->isNotEmpty() && $page->mjscheduletime()->isNotEmpty()) {
+  $schedule = $page->mjscheduledate()->value() . 'T'. $page->mjscheduletime() . ':00';
+  $date = new \DateTime($schedule, new \DateTimeZone('Europe/Berlin'));
+  $date->setTimezone(new \DateTimeZone('UTC'));
+  $schedule = $date->format(\DateTimeInterface::ISO8601);
+}
+  
 ```
 
 ## Responsive HTML Emails Example

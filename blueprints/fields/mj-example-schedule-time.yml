@@ -1,0 +1,5 @@
+label: Schedule Time UTC
+type: time
+#default: now
+width: 1/2
+help: <a target="_blank" href="https://www.timeanddate.com/worldclock/timezone/utc">Current Time at UTC</a>

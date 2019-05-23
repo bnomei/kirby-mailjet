@@ -1,0 +1,5 @@
+label: Schedule Date UTC
+type: date
+#default: today
+width: 1/2
+format: YYYY-MM-DD

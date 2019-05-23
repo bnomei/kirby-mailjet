@@ -73,8 +73,8 @@ class KirbyMailjet
     private static $_from = null;
     public static function senderAdress($emailadress = null)
     {
-        if (!self::$_from) {
-            $apifrom = c::get('plugin.mailjet.from', $emailadress);
+        if (!self::$_from || $emailadress) {
+            $apifrom = $emailadress ? $emailadress : c::get('plugin.mailjet.from');
 
             if ($apifrom && v::email($apifrom)) {
                 self::$_from = $apifrom;
@@ -274,6 +274,39 @@ class KirbyMailjet
             self::pushLog(str_replace('{file}', $file, l::get('mailjet-error-mustache-file')));
         }
         return $out;
+    }
+
+    /////////////////////////////////////
+    //
+    private static $_senders = null;
+    public static function senders()
+    {
+        $mj = self::client();
+        if (!$mj) {
+            return null;
+        }
+        if (self::$_senders) {
+            return self::$_senders;
+        }
+
+        $cl = array();
+        $exclude = c::get('plugin.mailjet.json-senders.exclude', []);
+        $response = $mj->get(Resources::$Sender, ['body' => null]);
+        if ($response->success()) {
+            foreach ($response->getData() as $r) {
+                if (in_array($r['Email'], $exclude) || strpos($r['Email'], '*') === 0 ) {
+                    continue;
+                }
+                if (in_array($r['Name'], $exclude)) {
+                    continue;
+                }
+
+                $cl[$r['Email']] = $r['Name'];
+            }
+            self::$_senders = $cl;
+        }
+
+        return $cl;
     }
 
     /////////////////////////////////////
@@ -561,7 +594,7 @@ class KirbyMailjet
     /////////////////////////////////////
     // send newsletter
     // default is just a test
-    public static function sendNewsletter($contactslistname, $campaign_body, $campaign_content, $testEmail = true)
+    public static function sendNewsletter($contactslistname, $campaign_body, $campaign_content, $testEmail = true, $schedule = null)
     {
         $jsonResponse = [ 'code' => 400]; // 'message' => 'Unknown Error'
 
@@ -601,6 +634,10 @@ class KirbyMailjet
 
         $hasTestEmail = v::email($testEmail);
         $hasPublish = $testEmail == 'Publish' || $testEmail == false;
+        $schedule = strtolower($schedule) == 'now' ? 'NOW' : $schedule;
+        if($schedule || $testEmail == 'Schedule') {
+            $hasPublish = false;
+        }
 
         /////////////////////////////////
         /// CAMPAIN GET/CREATE
@@ -614,7 +651,7 @@ class KirbyMailjet
             // -2 : deleted
             // -1 : archived draft
             // 0 : draft
-            // 1 : programmed
+            // 1 : programmed => schedule
             // 2 : sent
             // 3 : A/X tesring
         ];
@@ -643,7 +680,7 @@ class KirbyMailjet
 
                 $found = true;
                 $campaign_id = $campaign['ID'];
-                $isDraft = $campaign['Status'] == 0;
+                $isDraft = $campaign['Status'] == 0 || $campaign['Status'] == 1;
 
                 // do not create or update new if exists but is not draft
                 if ($hasPublish && !$isDraft) {
@@ -657,6 +694,11 @@ class KirbyMailjet
                     $response = $mj->put(Resources::$Newsletter, ['id' => $campaign_id, 'body' => $campaign_body]);
                     if ($response->success()) {
                         $campaign_id = $campaign['ID'];
+
+                        if(!$schedule) {
+                            $mj->delete(Resources::$NewsletterSchedule, ['id' => $campaign_id]);
+                        }
+
                     } else {
                         $jsonResponse['message'] = str_replace(['{newsletter}','{contactlist}'], [$campaign_id, $contactslistname], l::get('mailjet-error-newsletter-update-draft'));
                         self::pushLog(trim($jsonResponse['message']));
@@ -688,7 +730,7 @@ class KirbyMailjet
         }
 
         /////////////////////////////////
-        /// CAMPAIN BODY POST/PUT
+        /// CAMPAIGN BODY POST/PUT
         ///
         // 2) post/put detail
         /*
@@ -718,27 +760,43 @@ class KirbyMailjet
             ]);
             if ($response->success()) {
                 $jsonResponse['code'] = 200;
-                $jsonResponse['message'] = str_replace(['{newsletter}','{email}','{service}'], [$campaign_id, $testEmail, ''], l::get('mailjet-success-newsletter-test'));
+                $jsonResponse['message'] = str_replace(['{newsletter}', '{email}', '{service}'], [$campaign_id, $testEmail, ''], l::get('mailjet-success-newsletter-test'));
                 self::pushLog(trim($jsonResponse['message']), false);
                 return $jsonResponse;
             } else {
                 $params = [
-                    'to' 		=> $testEmail,
-                    'from' 		=> a::get($campaign_body, 'SenderEmail'),
-                    'replyTo' 	=> a::get($campaign_body, 'SenderEmail'),
-                    'subject' 	=> '[TEST] '.a::get($campaign_body, 'Subject'),
-                    'body' 		=> a::get($campaign_content, 'Html-part'),
-                    'service' 	=> self::EMAIL_SERVICE,
+                    'to' => $testEmail,
+                    'from' => a::get($campaign_body, 'SenderEmail'),
+                    'replyTo' => a::get($campaign_body, 'SenderEmail'),
+                    'subject' => '[TEST] ' . a::get($campaign_body, 'Subject'),
+                    'body' => a::get($campaign_content, 'Html-part'),
+                    'service' => self::EMAIL_SERVICE,
 
                 ];
                 if (self::sendMail($params)) {
                     $jsonResponse['code'] = 200;
-                    $jsonResponse['message'] = str_replace(['{newsletter}','{email}','{service}'], [$campaign_id, $testEmail, ' (transactional)'], l::get('mailjet-success-newsletter-test'));
+                    $jsonResponse['message'] = str_replace(['{newsletter}', '{email}', '{service}'], [$campaign_id, $testEmail, ' (transactional)'], l::get('mailjet-success-newsletter-test'));
                     self::pushLog(trim($jsonResponse['message']), false);
                     return $jsonResponse;
                 } else {
                     // error already tracked
                 }
+            }
+
+            // SCHEDULE
+        } elseif ($schedule) {
+            $response = $mj->put(Resources::$NewsletterSchedule, ['id' => $campaign_id, 'body' => [
+                'date' => $schedule
+            ]]);
+            if ($response->success()) {
+                $jsonResponse['code'] = 200;
+                $jsonResponse['message'] = str_replace(['{newsletter}','{contactlist}','{schedule}'], [$campaign_id, $contactslistID, $schedule], l::get('mailjet-success-newsletter-schedule'));
+                self::pushLog(trim($jsonResponse['message']), false);
+                return $jsonResponse;
+            } else {
+                $jsonResponse['message'] = str_replace(['{newsletter}','{contactlist}','{schedule}'], [$campaign_id, $contactslistID, $schedule], l::get('mailjet-error-newsletter-schedule'));
+                self::pushLog(trim($jsonResponse['message']).PHP_EOL.self::getResponseError($response));
+                return $jsonResponse;
             }
 
             // PUBLISH to contactslist

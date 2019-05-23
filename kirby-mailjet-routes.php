@@ -25,7 +25,7 @@ $kirby->set(
 
             return response::json($json, $code);
         },
-        
+
     )
 );
 
@@ -69,11 +69,23 @@ $kirby->set(
                         $json = $cl;
                         $code = 200;
                     }
+                } elseif ($file == 'senders.json') {
+                    if (!$cl || f::modified($cacheFile) + c::get('plugin.mailjet.json.cache', 60*5) < time()) {
+                        $cls = KirbyMailjet::senders();
+                        if (count($cls) > 0) {
+                            f::write($cacheFile, json_encode($cl));
+                            $cl = $cls;
+                        }
+                    }
+                    if ($cl) {
+                        $json = $cl;
+                        $code = 200;
+                    }
                 }
             }
 
             return response::json($json, $code);
         },
-        
+
     )
 );
