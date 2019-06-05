@@ -46,10 +46,10 @@ $kirby->set(
                 }
 
                 if ($file == 'contactslists.json') {
-                    if (!$cl || f::modified($cacheFile) + c::get('plugin.mailjet.json.cache', 60*5) < time()) {
+                    if (!$cl || f::modified($cacheFile) + c::get('plugin.mailjet.json.cache', 60 * 5) < time()) {
                         $cls = KirbyMailjet::contactslists();
                         if (count($cls) > 0) {
-                            f::write($cacheFile, json_encode($cl));
+                            f::write($cacheFile, json_encode($cls));
                             $cl = $cls;
                         }
                     }
@@ -58,10 +58,10 @@ $kirby->set(
                         $code = 200;
                     }
                 } elseif ($file == 'segments.json') {
-                    if (!$cl || f::modified($cacheFile) + c::get('plugin.mailjet.json.cache', 60*5) < time()) {
+                    if (!$cl || f::modified($cacheFile) + c::get('plugin.mailjet.json.cache', 60 * 5) < time()) {
                         $cls = KirbyMailjet::segments();
                         if (count($cls) > 0) {
-                            f::write($cacheFile, json_encode($cl));
+                            f::write($cacheFile, json_encode($cls));
                             $cl = $cls;
                         }
                     }
@@ -70,10 +70,10 @@ $kirby->set(
                         $code = 200;
                     }
                 } elseif ($file == 'senders.json') {
-                    if (!$cl || f::modified($cacheFile) + c::get('plugin.mailjet.json.cache', 60*5) < time()) {
+                    if (!$cl || f::modified($cacheFile) + c::get('plugin.mailjet.json.cache', 60 * 5) < time()) {
                         $cls = KirbyMailjet::senders();
                         if (count($cls) > 0) {
-                            f::write($cacheFile, json_encode($cl));
+                            f::write($cacheFile, json_encode($cls));
                             $cl = $cls;
                         }
                     }
